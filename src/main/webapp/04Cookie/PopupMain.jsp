@@ -8,7 +8,7 @@ if(cookies != null){
 	for(Cookie c : cookies){
 		String cookieName = c.getName();
 		String cookieValue = c.getValue();
-		if(cookieName.equals("PopupColes")){
+		if(cookieName.equals("PopupClose")){
 			popupMode = cookieValue;
 		}
 	}
