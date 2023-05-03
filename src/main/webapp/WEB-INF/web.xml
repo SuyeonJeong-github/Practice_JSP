@@ -52,4 +52,10 @@
     <param-value>1234</param-value>
   </context-param>
   
+  <!-- 세션 유지 시간 설정(단위 : 분) -->
+  <session-config>
+    <session-timeout>20</session-timeout>
+  </session-config>
+
+  
 </web-app>
