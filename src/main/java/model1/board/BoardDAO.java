@@ -54,7 +54,6 @@ public class BoardDAO extends JDBConnect{
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
-			System.out.println(query);
 
 			while(rs.next()) { // 결과를 순화하며
 				// 한 행(게시물 하나)의 내용을 DTO에 저장
@@ -102,5 +101,57 @@ public class BoardDAO extends JDBConnect{
 		}
 		
 		return result; // 추가한 행의 개수 반환
+	}
+	
+	// 지정한 게시물을 찾아 내용을 반환합니다.
+	public BoardDTO selectView(String num) {
+		BoardDTO dto = new BoardDTO();
+		
+		// 쿼리문 준비
+		String query = "select b.*, m.name "
+					+ " from member m inner join board b "
+					+ " on m.id = b.id "
+					+ " where num=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			
+			// 결과 처리
+			if(rs.next()) {
+				dto.setNum(rs.getString(1));
+				dto.setTitle(rs.getString(2));
+				dto.setContent(rs.getString("content"));
+				dto.setPostdate(rs.getDate("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitcount(rs.getString(6));
+				dto.setName(rs.getString("name"));
+			}
+		}
+		catch(Exception e) {
+			System.out.println("게시물 상세보기 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	// 지정한 게시물의 조회수를 1 증가시킵니다.
+	public void updateVisitCount(String num) {
+		// 쿼리문 준비
+		String query = "update board set "
+					+ " visitcount=visitcount+1 "
+					+ " where num=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.executeQuery();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 조회수 증가 중 예외 발생");
+			e.printStackTrace();
+		}
 	}
 }
