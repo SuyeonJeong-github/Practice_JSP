@@ -154,4 +154,51 @@ public class BoardDAO extends JDBConnect{
 			e.printStackTrace();
 		}
 	}
+	
+	// 지정한 게시물을 수정합니다.
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			// 쿼리문 템플릿
+			String query = "update board set "
+						+ " title=?, content=? "
+						+ " where num=?";
+			
+			// 쿼리문 완성
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getNum());
+			
+			// 쿼리문 실행
+			result = psmt.executeUpdate();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 수정 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result; // 결과 반환
+	}
+	
+	// 지정한 게시물을 삭제합니다.
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "delete from board where num=?";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getNum());
+			
+			result = psmt.executeUpdate();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
