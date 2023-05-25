@@ -52,6 +52,16 @@
     <param-value>1234</param-value>
   </context-param>
   
+  <!-- 페이징 설정값 -->
+  <context-param>
+    <param-name>POST_PER_PAGE</param-name>
+    <param-value>10</param-value>
+  </context-param>
+  <context-param>
+    <param-name>PAGES_PER_BLOCK</param-name>
+    <param-value>5</param-value>
+  </context-param>
+  
   <!-- 세션 유지 시간 설정(단위 : 분) -->
   <session-config>
     <session-timeout>20</session-timeout>
